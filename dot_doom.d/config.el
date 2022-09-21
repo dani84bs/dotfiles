@@ -40,7 +40,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Dropbox/orgzly")
+(setq org-directory "~/Library/CloudStorage/GoogleDrive-dani84bs@gmail.com/My Drive/org")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -104,11 +104,26 @@
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 
 
-(add-hook! '+doom-dashboard-mode-hook (toggle-frame-maximized))
-(setq! +format-on-save-enabled-modes (append +format-on-save-enabled-modes '(mhtml-mode)))
+(add-hook! 'window-setup-hook #'toggle-frame-maximized)
+;;(setq! +format-on-save-enabled-modes (append +format-on-save-enabled-modes '(mhtml-mode)))
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-mode))
 (add-hook 'c++-mode-hook (lambda ()
                            (platformio-conditionally-enable)))
 
 (setq projectile-ignored-projects '("~/" "/tmp"))
+
+;; (setq lsp-sourcekit-extra-args (quote ("--sync")))
+
+(defun org-babel-edit-prep:jupyter-python (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+
+(load! "+swift")
+
+(after! explain-pause-mode
+        (setq explain-pause-slow-too-long-ms 400))
+
+(map! :leader
+      (:prefix ("o" . "open")
+        :desc "Calculator"              "c" #'calc))
