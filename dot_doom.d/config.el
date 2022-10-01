@@ -21,8 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "JetBrains Mono" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 15 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -79,6 +79,7 @@
 (setq! doom-localleader-alt-key "C-s m")
 
 (after! lsp-mode
+  (setq! lsp-lens-enable nil)
   (setq! lsp-pylsp-plugins-pydocstyle-enabled nil)
   (setq! lsp-pylsp-plugins-yapf-enabled t)
   (lsp-register-client
@@ -122,8 +123,33 @@
 (load! "+swift")
 
 (after! explain-pause-mode
-        (setq explain-pause-slow-too-long-ms 400))
+  (setq explain-pause-slow-too-long-ms 400))
 
 (map! :leader
       (:prefix ("o" . "open")
-        :desc "Calculator"              "c" #'calc))
+       :desc "Calculator"              "c" #'calc))
+
+
+(setq calc-angle-mode 'rad  ; radians are rad
+      calc-symbolic-mode t)
+
+(setq vterm-kill-buffer-on-exit t)
+(use-package! multi-vterm
+  :after vterm)
+(setq evil-ex-substitute-global t)
+(setq dap-ui-variable-length 200)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
+(after! dart-mode
+  (require 'flutter)
+  (defun flutter-build-build-runner (&optional args)
+    (interactive
+     (list (when current-prefix-arg
+             (read-string "Args: "))))
+    (pop-to-buffer-same-window
+     (flutter--from-project-root
+      (make-comint "Build Runner" (flutter-build-command) nil "pub" "run" "build_runner" "build"))))
+  (map! :map dart-mode-map
+        :localleader
+        (:prefix ("f" . "flutter")
+                 "b" #'flutter-build-build-runner)))

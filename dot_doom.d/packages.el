@@ -49,3 +49,5 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 (package! platformio-mode)
+(package! multi-vterm)
+(package! dbc-mode :recipe (:host github :repo "alexmurray/dbc-mode"))
