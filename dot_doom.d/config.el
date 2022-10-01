@@ -130,7 +130,7 @@
        :desc "Calculator"              "c" #'calc))
 
 
-(setq calc-angle-mode 'rad  ; radians are rad
+(setq calc-angle-mode 'rad
       calc-symbolic-mode t)
 
 (setq vterm-kill-buffer-on-exit t)
@@ -142,10 +142,8 @@
 
 (after! dart-mode
   (require 'flutter)
-  (defun flutter-build-build-runner (&optional args)
-    (interactive
-     (list (when current-prefix-arg
-             (read-string "Args: "))))
+  (defun flutter-build-build-runner ()
+    (interactive)
     (pop-to-buffer-same-window
      (flutter--from-project-root
       (make-comint "Build Runner" (flutter-build-command) nil "pub" "run" "build_runner" "build"))))
