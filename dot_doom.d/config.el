@@ -151,3 +151,7 @@
         :localleader
         (:prefix ("f" . "flutter")
                  "b" #'flutter-build-build-runner)))
+
+(use-package! dbc-mode
+  :mode "\\.dbc\\'"
+  )
