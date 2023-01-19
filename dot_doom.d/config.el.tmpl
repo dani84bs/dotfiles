@@ -120,7 +120,6 @@
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp))
 
-(load! "+swift")
 
 (after! explain-pause-mode
   (setq explain-pause-slow-too-long-ms 400))
