@@ -159,3 +159,6 @@
 (use-package! dbc-mode
   :mode "\\.dbc\\'"
   )
+
+(after! dap-mode
+  (setq dap-python-debugger 'debugpy))
