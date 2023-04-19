@@ -195,16 +195,6 @@
   (setq lsp-sourcekit-extra-args (quote
 				  ("-Xswiftc" "-sdk" "-Xswiftc" "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk" "-Xswiftc" "-target" "-Xswiftc" "x86_64-apple-ios16.2-simulator")))
   )
-;; (use-package! copilot
-;;   ;; :hook (prog-mode . copilot-mode)
-;;   :bind (("C-TAB" . 'copilot-accept-completion-by-word)
-;;          ("C-<tab>" . 'copilot-accept-completion-by-word)
-;;          :map copilot-completion-map
-;;          ("<tab>" . 'copilot-accept-completion)
-;;          ("TAB" . 'copilot-accept-completion)))
-
-;; (after! copilot
-;;   (customize-set-variable 'copilot-enable-predicates '(evil-insert-state-p)))
 
 (after! markdown-mode
   (setq +markdown-compile-functions '(;;+markdown-compile-marked
