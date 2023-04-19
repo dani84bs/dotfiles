@@ -41,8 +41,6 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "{{ .orgDir }}")
-
-
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -79,6 +77,7 @@
 (setq! doom-localleader-alt-key "C-s m")
 
 (after! lsp-mode
+  (setq! lsp-ui-doc-enable nil)
   (setq! lsp-lens-enable nil)
   (setq! lsp-pylsp-plugins-pydocstyle-enabled nil)
   (setq! lsp-pylsp-plugins-yapf-enabled t)
@@ -106,6 +105,8 @@
 
 
 (add-hook! 'window-setup-hook #'toggle-frame-maximized)
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 ;;(setq! +format-on-save-enabled-modes (append +format-on-save-enabled-modes '(mhtml-mode)))
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-mode))
@@ -113,8 +114,6 @@
                            (platformio-conditionally-enable)))
 
 (setq projectile-ignored-projects '("~/" "/tmp"))
-
-;; (setq lsp-sourcekit-extra-args (quote ("--sync")))
 
 (defun org-babel-edit-prep:jupyter-python (babel-info)
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
@@ -146,6 +145,8 @@
 
 (after! dart-mode
   (require 'flutter)
+  (setq lsp-dart-test-code-lens nil)
+  (setq lsp-dart-main-code-lens nil)
   (defun flutter-build-build-runner ()
     (interactive)
     (pop-to-buffer-same-window
@@ -162,3 +163,58 @@
 
 (after! dap-mode
   (setq dap-python-debugger 'debugpy))
+
+(map! :leader
+      (:when (modulep! :ui workspaces)
+        (:prefix-map ("l" . "workspace")
+         :desc "Display tab bar"           "l" #'+workspace/display
+         :desc "Switch workspace"          "."   #'+workspace/switch-to
+         :desc "Switch to last workspace"  "`"   #'+workspace/other
+         :desc "New workspace"             "c"   #'+workspace/new
+         :desc "New named workspace"       "C"   #'+workspace/new-named
+         :desc "Load workspace from file"  "l"   #'+workspace/load
+         :desc "Save workspace to file"    "s"   #'+workspace/save
+         :desc "Delete session"            "x"   #'+workspace/kill-session
+         :desc "Delete this workspace"     "d"   #'+workspace/delete
+         :desc "Rename workspace"          "r"   #'+workspace/rename
+         :desc "Restore last session"      "R"   #'+workspace/restore-last-session
+         :desc "Next workspace"            "n"   #'+workspace/switch-right
+         :desc "Previous workspace"        "p"   #'+workspace/switch-left
+         :desc "Switch to 1st workspace"   "1"   #'+workspace/switch-to-0
+         :desc "Switch to 2nd workspace"   "2"   #'+workspace/switch-to-1
+         :desc "Switch to 3rd workspace"   "3"   #'+workspace/switch-to-2
+         :desc "Switch to 4th workspace"   "4"   #'+workspace/switch-to-3
+         :desc "Switch to 5th workspace"   "5"   #'+workspace/switch-to-4
+         :desc "Switch to 6th workspace"   "6"   #'+workspace/switch-to-5
+         :desc "Switch to 7th workspace"   "7"   #'+workspace/switch-to-6
+         :desc "Switch to 8th workspace"   "8"   #'+workspace/switch-to-7
+         :desc "Switch to 9th workspace"   "9"   #'+workspace/switch-to-8
+         :desc "Switch to final workspace" "0"   #'+workspace/switch-to-final)))
+
+(after! lsp-mode
+  (setq lsp-sourcekit-extra-args (quote
+				  ("-Xswiftc" "-sdk" "-Xswiftc" "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk" "-Xswiftc" "-target" "-Xswiftc" "x86_64-apple-ios16.2-simulator")))
+  )
+;; (use-package! copilot
+;;   ;; :hook (prog-mode . copilot-mode)
+;;   :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+;;          ("C-<tab>" . 'copilot-accept-completion-by-word)
+;;          :map copilot-completion-map
+;;          ("<tab>" . 'copilot-accept-completion)
+;;          ("TAB" . 'copilot-accept-completion)))
+
+;; (after! copilot
+;;   (customize-set-variable 'copilot-enable-predicates '(evil-insert-state-p)))
+
+(after! markdown-mode
+  (setq +markdown-compile-functions '(;;+markdown-compile-marked
+                                      ;;+markdown-compile-pandoc
+                                      ;; +markdown-compile-markdown
+                                      +markdown-compile-multimarkdown)))
+
+;;https://www.gnu.org/software/emacs/manual/html_node/tramp/Remote-programs.html
+(connection-local-set-profile-variables 'conda-cs
+   '((tramp-remote-path . ("~/miniconda3/envs/cs/bin" tramp-default-remote-path))))
+
+(connection-local-set-profiles
+   '(:application tramp :machine "192.168.0.213") 'conda-cs)
