@@ -51,3 +51,5 @@
 (package! platformio-mode)
 (package! multi-vterm)
 (package! dbc-mode :recipe (:host github :repo "alexmurray/dbc-mode"))
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
