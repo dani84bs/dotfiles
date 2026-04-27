@@ -8,6 +8,29 @@ sudo apt update
 sudo apt install ripgrep fd-find bat glow atuin lsd neovim lnav fish
 {{ end }}
 
+
+if [ "$SHELL" != "$(which fish)" ]; then
+    chsh -s $(which fish)
+else
+    echo "✅ Fish is already the default shell"
+fi
+
+if command -v fish &> /dev/null; then
+    
+    # Controlla se Fisher è già installato dentro Fish
+    if ! fish -c "type -q fisher"; then
+        echo "🐟 Fisher not found, installing..."
+        fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+    fi
+
+    echo "🔄 Updating fisher plugin..."
+    fish -c "fisher update"
+
+else
+    echo "⚠️ Fish not installed"
+fi
+
+
 # Tmux deps
 
 if [ ! -d {{ .chezmoi.homeDir }}/.tmux/plugins/tpm ]; then
