@@ -1,0 +1,58 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  esc   f1    f2    f3   f4   f5    f6   f7   f8    f9    f10   f11  f12
+  102d  1     2     3    4    5     6    7    8     9     0     -    =     bspc
+  tab   q     w     e    r    t     y    u    i     o     p     [    ]     \
+  caps  a     s     d    f    g     h    j    k     l     ;     '    ret
+  lsft  grv   z     x    c    v     b    n    m     ,     .     /    rsft
+  lctl  lalt  lmet            spc             rmet  ralt  rctl
+)
+
+(deflayer base
+  _     _     _     _    _    _     _    _    _     _     _     _    _
+  _     _     _     _    _    _     _    _    _     _     _     _    _     _
+  _     _     _     _    _    _     _    _    _     _     _     _    _     _
+  @^    @A    @S    @D   @F   _     _    @J   @K    @L    @;    _    @ret
+  _     @num  _     _    _    _     _    _    _     _     _     _    _
+  _     _     _               @spc            _     _     _
+)
+
+(deflayer symbols
+  _     f1    f2    f3   f4   f5    f6   f7   f8    f9    f10   f11  f12
+  _     _     _     _    _    _     _    _    _     _     _     _    _     _
+  _     S-1   S-2   S-3  S-4  S-5   S-6  S-7  S-8   S-9   S-0   S--  S-=   S-\
+  _     S-'   '     S--  -    =     left down up    rght  S-;   S-'  _
+  _     _     S-[   S-]  S-grv S-=   _    lmet ]     S-,   S-.   S-/  _
+  _     _     _               _               _     _     _
+)
+
+(deflayer numbers
+  _     _     _     _    _    _     _    _    _     _     _     _    _
+  _     _     _     _    _    _     _    _    _     _     _     _    _     _
+  _     _     _     _    _    _     S-8  7    8     9     -     _    _     _
+  _     _     _     _    _    _     S-=  4    5     6     S-;   _    _
+  _     _     _     _    _    _     _    0    1     2     3     .    _
+  _     _     _               _               _     _     _
+)
+
+(defalias
+  ^ (tap-hold 200 200 esc lctl) 
+
+  A (tap-hold-release 200 250 a lctl)
+  S (tap-hold-release 200 350 s lalt)
+  D (tap-hold-release 200 250 d lmet)
+  F (tap-hold-release 200 250 f lsft)
+
+  J (tap-hold-release 200 250 j rsft)
+  K (tap-hold-release 200 250 k rmet)
+  L (tap-hold-release 200 350 l ralt)
+  ; (tap-hold-release 200 250 ; rctl)
+
+  num (tap-hold-release 200 250 grv (layer-toggle numbers))
+  spc (tap-hold-release 200 250 spc (layer-toggle symbols))
+  ret (tap-hold-release 200 250 ret (layer-toggle symbols))
+)
+
