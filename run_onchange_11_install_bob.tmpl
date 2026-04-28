@@ -1,0 +1,41 @@
+#!/bin/bash
+# Install bob on linux
+
+{{ if eq .chezmoi.os "linux" }}
+VERSION="latest"
+BIN_DIR="$HOME/.local/bin"
+mkdir -p "$BIN_DIR"
+
+if ! command -v bob &>/dev/null; then
+  echo "Installing bob-nvim..."
+
+  # Identify architecture
+  ARCH=$(uname -m)
+  if [ "$ARCH" = "x86_64" ]; then
+    PLATFORM="linux-x86_64"
+  elif [ "$ARCH" = "aarch64" ]; then
+    PLATFORM="linux-arm"
+  else
+    echo "Unsupported architecture: $ARCH"
+    exit 1
+  fi
+
+  # Download and extract the binary
+  # Note: Using 'latest/download' redirect from GitHub
+  curl -LO "https://github.com/MordechaiHadad/bob/releases/latest/download/bob-${PLATFORM}.zip"
+
+  # Debian usually has 'unzip' installed, if not: sudo apt install unzip
+  unzip "bob-${PLATFORM}.zip"
+  chmod +x "bob-${PLATFORM}/bob"
+  mv "bob-${PLATFORM}/bob" "$BIN_DIR/bob"
+
+  # Cleanup
+  rm "bob-${PLATFORM}.zip"
+  rm -rf "bob-${PLATFORM}"
+
+  echo "bob-nvim installed to $BIN_DIR"
+else
+  echo "bob-nvim is already installed"
+fi
+~/.local/bin/bob use stable
+{{ end }}
