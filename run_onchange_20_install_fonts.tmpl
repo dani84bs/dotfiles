@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Versione dei Nerd Fonts
+VERSION="v3.2.1"
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- MACOS ---
+echo "🚀 Fond macOS: Using homebrew..."
+
+if ! command -v brew &> /dev/null; then
+    echo "⚠️ Homebrew not found."
+    exit 0
+fi
+
+brew install --cask font-fira-code-nerd-font
+brew install --cask font-jetbrains-mono-nerd-font
+
+{{ else if eq .chezmoi.os "linux" -}}
+# --- DEBIAN ---
+echo "🐧 Found Linux: Manual installation..."
+
+FONT_DIR="$HOME/.local/share/fonts"
+mkdir -p "$FONT_DIR"
+
+install_nerd_font() {
+    FONT_NAME=$1
+    ZIP_FILE="${FONT_NAME}.zip"
+    
+    if ls "$FONT_DIR" | grep -iq "$FONT_NAME"; then
+        echo "✅ $FONT_NAME è già installato."
+    else
+        echo "📥 Downloading $FONT_NAME..."
+        curl -L "https://github.com/ryanoasis/nerd-fonts/releases/download/${VERSION}/${ZIP_FILE}" -o "/tmp/${ZIP_FILE}"
+        unzip -o "/tmp/${ZIP_FILE}" -d "$FONT_DIR/$FONT_NAME/"
+        rm "/tmp/${ZIP_FILE}"
+    fi
+}
+
+
+install_nerd_font "FiraCode"
+install_nerd_font "JetBrainsMono"
+
+# Aggiorna la cache dei font
+echo "🔄 Updating font cache..."
+fc-cache -fv
+{{ end -}}
+
+echo "✨ Font installation done!"
