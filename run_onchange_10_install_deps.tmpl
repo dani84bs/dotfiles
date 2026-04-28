@@ -8,12 +8,6 @@ sudo apt update
 sudo apt install ripgrep fd-find bat glow atuin lsd lnav fish unzip curl build-essential
 {{ end }}
 
-if [ "$SHELL" != "$(which fish)" ]; then
-  chsh -s $(which fish)
-else
-  echo "✅ Fish is already the default shell"
-fi
-
 # Tmux deps
 
 if [ ! -d {{ .chezmoi.homeDir }}/.tmux/plugins/tpm ]; then
