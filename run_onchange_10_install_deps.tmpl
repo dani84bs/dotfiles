@@ -5,39 +5,37 @@
 brew install ripgrep fd bat glow atuin lsd neovim kanata lnav fish
 {{ else if eq .chezmoi.os "linux" }}
 sudo apt update
-sudo apt install ripgrep fd-find bat glow atuin lsd neovim lnav fish
+sudo apt install ripgrep fd-find bat glow atuin lsd neovim lnav fish unzip curl
 {{ end }}
 
-
 if [ "$SHELL" != "$(which fish)" ]; then
-    chsh -s $(which fish)
+  chsh -s $(which fish)
 else
-    echo "✅ Fish is already the default shell"
+  echo "✅ Fish is already the default shell"
 fi
 
-if command -v fish &> /dev/null; then
-    
-    # Controlla se Fisher è già installato dentro Fish
-    if ! fish -c "type -q fisher"; then
-        echo "🐟 Fisher not found, installing..."
-        fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
-    fi
+if command -v fish &>/dev/null; then
 
-    echo "🔄 Updating fisher plugin..."
-    fish -c "fisher update"
+  # Check fisher
+  if ! fish -c "type -q fisher"; then
+    echo "🐟 Fisher not found, installing..."
+    fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+  fi
+
+  echo "🔄 Updating fisher plugin..."
+  fish -c "fisher update"
 
 else
-    echo "⚠️ Fish not installed"
+  echo "⚠️ Fish not installed"
 fi
-
 
 # Tmux deps
 
 if [ ! -d {{ .chezmoi.homeDir }}/.tmux/plugins/tpm ]; then
-	git clone https://github.com/tmux-plugins/tpm {{ .chezmoi.homeDir }}/.tmux/plugins/tpm
+  git clone https://github.com/tmux-plugins/tpm {{ .chezmoi.homeDir }}/.tmux/plugins/tpm
 fi
 {{ if eq .chezmoi.os "darwin" }}
-brew install zoxide fzf tmux 
+brew install zoxide fzf tmux
 {{ else if eq .chezmoi.os "linux" }}
 sudo apt update
 sudo apt install zoxide fzf tmux xclip
