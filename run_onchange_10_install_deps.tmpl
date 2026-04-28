@@ -35,6 +35,7 @@ if ! command -v bob &>/dev/null; then
 
   # Cleanup
   rm "bob-${PLATFORM}.zip"
+  rm -rf "bob-${PLATFORM}"
 
   echo "bob-nvim installed to $BIN_DIR"
 else
