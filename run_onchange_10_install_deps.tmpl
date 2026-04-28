@@ -30,8 +30,8 @@ if ! command -v bob &>/dev/null; then
 
   # Debian usually has 'unzip' installed, if not: sudo apt install unzip
   unzip "bob-${PLATFORM}.zip"
-  chmod +x bob
-  mv bob "$BIN_DIR/bob"
+  chmod +x "bob-${PLATFORM}/bob"
+  mv "bob-${PLATFORM}/bob" "$BIN_DIR/bob"
 
   # Cleanup
   rm "bob-${PLATFORM}.zip"
