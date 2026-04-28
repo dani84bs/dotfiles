@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# This script installs the Kitty terminal emulator.
+# It detects the OS and uses the appropriate package manager.
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- macOS LOGIC ---
+echo "🚀 Detected macOS. Checking for Kitty..."
+
+if command -v kitty &>/dev/null; then
+  echo "✅ Kitty is already installed."
+else
+  echo "📥 Installing Kitty via Homebrew..."
+  # Ensure Homebrew is available
+  if ! command -v brew &>/dev/null; then
+    echo "❌ Homebrew not found. Please install Homebrew first."
+    exit 1
+  fi
+  brew install --cask kitty
+fi
+
+{{ else if eq .chezmoi.os "linux" -}}
+# --- LINUX (DEBIAN) LOGIC ---
+echo "🐧 Detected Linux. Checking for Kitty..."
+
+if command -v kitty &>/dev/null; then
+  echo "✅ Kitty is already installed."
+else
+  # Detect if it's actually a Debian-based system
+  if [ -f /etc/debian_version ]; then
+    echo "📥 Installing Kitty via APT..."
+    sudo apt update
+    sudo apt install -y kitty
+  else
+    echo "⚠️ OS is Linux but Debian was not detected. Skipping automatic install."
+    echo "Please install Kitty manually using your package manager."
+  fi
+fi
+ENV_FILE="/etc/environment"
+
+echo "Checking for Mesa OpenGL overrides in $ENV_FILE..."
+
+# Check if the variables are already present to avoid duplicates
+if ! grep -q "MESA_GL_VERSION_OVERRIDE" "$ENV_FILE"; then
+  echo "Applying global OpenGL overrides for UTM compatibility..."
+
+  # Append variables to /etc/environment using sudo and tee
+  echo "MESA_GL_VERSION_OVERRIDE=3.3" | sudo tee -a "$ENV_FILE" >/dev/null
+  echo "MESA_GLSL_VERSION_OVERRIDE=330" | sudo tee -a "$ENV_FILE" >/dev/null
+
+  echo "Successfully updated $ENV_FILE. Note: A reboot or re-login is required to apply changes."
+else
+  echo "OpenGL overrides already present. Skipping."
+fi
+{{ end -}}
+
+echo "✨ Kitty installation process completed!"
