@@ -5,7 +5,7 @@
 brew install ripgrep fd bat glow atuin lsd neovim kanata lnav fish
 {{ else if eq .chezmoi.os "linux" }}
 sudo apt update
-sudo apt install ripgrep fd-find bat glow atuin lsd lnav fish unzip curl
+sudo apt install ripgrep fd-find bat glow atuin lsd lnav fish unzip curl build-essentials
 VERSION="latest"
 BIN_DIR="$HOME/.local/bin"
 mkdir -p "$BIN_DIR"
