@@ -12,7 +12,7 @@
 )
 
 (deflayer base
-  _     _     _     _    _    _     _    _    _     _     _     _    _
+  _     brdn  brup  _    _    _     _    prev  pp   next  mute  vold volu
   _     _     _     _    _    _     _    _    _     _     _     _    _     _
   _     _     _     _    _    _     _    _    _     _     _     _    _     _
   @^    @A    @S    @D   @F   _     _    @J   @K    @L    @;    _    @ret
