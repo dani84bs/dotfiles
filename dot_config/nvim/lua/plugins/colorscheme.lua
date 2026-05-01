@@ -1,6 +1,8 @@
 return {
   -- add gruvbox
-  { "ellisonleao/gruvbox.nvim" },
+  { "ellisonleao/gruvbox.nvim", lazy = true, opts = {
+    dim_inactive = true,
+  } },
 
   -- configure catpuccin
   {
@@ -20,7 +22,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-nvim",
+      colorscheme = "gruvbox",
     },
   },
 }
