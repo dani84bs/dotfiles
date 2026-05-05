@@ -1,11 +1,4 @@
 #!/bin/bash
-
-if [ "$SHELL" != "$(which fish)" ]; then
-  chsh -s $(which fish)
-else
-  echo "✅ Fish is already the default shell"
-fi
-
 if command -v fish &>/dev/null; then
 
   # Check fisher
