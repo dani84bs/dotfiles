@@ -2,21 +2,14 @@
 # General utilities
 
 {{ if eq .chezmoi.os "darwin" }}
-brew install ripgrep fd bat glow atuin lsd neovim kanata lnav fish
+brew install git ripgrep fd bat glow atuin lsd neovim kanata lnav fish zoxide fzf tmux
 {{ else if eq .chezmoi.os "linux" }}
 sudo apt update
-sudo apt install ripgrep fd-find bat glow atuin lsd lnav fish unzip curl build-essential
+sudo apt install git ripgrep fd-find bat glow atuin lsd lnav fish unzip curl build-essential zoxide fzf tmux xclip
 {{ end }}
 
-# Tmux deps
+# Tmux plugin manager
 
 if [ ! -d {{ .chezmoi.homeDir }}/.tmux/plugins/tpm ]; then
   git clone https://github.com/tmux-plugins/tpm {{ .chezmoi.homeDir }}/.tmux/plugins/tpm
 fi
-
-{{ if eq .chezmoi.os "darwin" }}
-brew install zoxide fzf tmux
-{{ else if eq .chezmoi.os "linux" }}
-sudo apt update
-sudo apt install zoxide fzf tmux xclip
-{{ end }}

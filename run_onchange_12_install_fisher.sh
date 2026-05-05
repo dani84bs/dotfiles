@@ -5,10 +5,9 @@ if command -v fish &>/dev/null; then
   if ! fish -c "type -q fisher"; then
     echo "🐟 Fisher not found, installing..."
     fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+    echo "🔄 Updating fisher plugin..."
+    fish -c "fisher update"
   fi
-
-  echo "🔄 Updating fisher plugin..."
-  fish -c "fisher update"
 
 else
   echo "⚠️ Fish not installed"

@@ -20,13 +20,10 @@ else
 fi
 
 {{ else if eq .chezmoi.os "linux" }}
-# --- LINUX (DEBIAN) LOGIC ---
 echo "🐧 Detected Linux. Checking for Kitty..."
-
 if command -v kitty &>/dev/null; then
   echo "✅ Kitty is already installed."
 else
-  # Detect if it's actually a Debian-based system
   if [ -f /etc/debian_version ]; then
     echo "📥 Installing Kitty via APT..."
     sudo apt update
