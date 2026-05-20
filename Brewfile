@@ -11,6 +11,7 @@ brew "git-delta"
 brew "lnav"
 brew "zoxide"
 brew "unzip"
+brew "ouch"
 
 # --- Shell & Terminal ---
 brew "fish"
