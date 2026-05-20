@@ -18,5 +18,4 @@ done
 
 # --- Install packages from Brewfile ---
 # --no-upgrade: only install missing packages, never upgrade existing ones
-# --no-lock:    don't write a Brewfile.lock.json
-brew bundle --file "{{ .chezmoi.sourceDir }}/Brewfile" --no-upgrade --no-lock
+brew bundle --file "{{ .chezmoi.sourceDir }}/Brewfile" --no-upgrade 
