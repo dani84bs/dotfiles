@@ -22,5 +22,7 @@ brew bundle --file "{{ .chezmoi.sourceDir }}/Brewfile" --no-upgrade
 
 {{ if eq .chezmoi.os "darwin" -}}
 # --- Install macOS font casks ---
-brew install --cask font-jetbrains-mono-nerd-font font-fira-code-nerd-font
+for cask in font-jetbrains-mono-nerd-font font-fira-code-nerd-font; do
+    brew list --cask "$cask" &>/dev/null || brew install --cask "$cask"
+done
 {{- end }}
