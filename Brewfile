@@ -22,8 +22,3 @@ brew "neovim"
 brew "atuin"
 brew "lazygit"
 brew "kanata"
-
-on_macos do
-  cask "font-jetbrains-mono-nerd-font"
-  cask "font-fira-code-nerd-font"
-end

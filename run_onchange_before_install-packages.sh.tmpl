@@ -18,4 +18,9 @@ done
 
 # --- Install packages from Brewfile ---
 # --no-upgrade: only install missing packages, never upgrade existing ones
-brew bundle --file "{{ .chezmoi.sourceDir }}/Brewfile" --no-upgrade 
+brew bundle --file "{{ .chezmoi.sourceDir }}/Brewfile" --no-upgrade
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- Install macOS font casks ---
+brew install --cask font-jetbrains-mono-nerd-font font-fira-code-nerd-font
+{{- end }}
