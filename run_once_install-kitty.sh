@@ -14,8 +14,17 @@ else
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
     mkdir -p "$HOME/.local/bin" "$HOME/.local/share/applications"
     ln -sf "$HOME/.local/kitty.app/bin/kitty" "$HOME/.local/bin/kitty"
-    cp "$HOME/.local/kitty.app/share/applications/kitty.desktop" "$HOME/.local/share/applications/"
-    cp "$HOME/.local/kitty.app/share/applications/kitty-open.desktop" "$HOME/.local/share/applications/"
-    sed -i "s|Icon=kitty|Icon=$HOME/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" "$HOME/.local/share/applications/kitty.desktop" "$HOME/.local/share/applications/kitty-open.desktop"
-    sed -i "s|Exec=kitty|Exec=env LIBGL_ALWAYS_SOFTWARE=1 $HOME/.local/kitty.app/bin/kitty|g" "$HOME/.local/share/applications/kitty.desktop" "$HOME/.local/share/applications/kitty-open.desktop"
+    cat > "$HOME/.local/share/applications/kitty.desktop" << EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=kitty
+GenericName=Terminal emulator
+Comment=Fast, feature-rich, GPU based terminal
+TryExec=$HOME/.local/kitty.app/bin/kitty
+Exec=env LIBGL_ALWAYS_SOFTWARE=1 $HOME/.local/kitty.app/bin/kitty
+Icon=$HOME/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png
+Categories=System;TerminalEmulator;
+EOF
+    update-desktop-database "$HOME/.local/share/applications"
 fi
