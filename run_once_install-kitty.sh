@@ -11,7 +11,7 @@ done
 if [[ "$(uname)" == "Darwin" ]]; then
     brew install --cask kitty
 else
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
     mkdir -p "$HOME/.local/bin" "$HOME/.local/share/applications"
     ln -sf "$HOME/.local/kitty.app/bin/kitty" "$HOME/.local/bin/kitty"
     cat > "$HOME/.local/share/applications/kitty.desktop" << EOF
