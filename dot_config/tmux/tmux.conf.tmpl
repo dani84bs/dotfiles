@@ -1,0 +1,53 @@
+set -g default-shell $SHELL
+
+# --- Base Options ---
+set -g mode-keys vi
+set -g history-limit 100000
+set -g mouse on
+
+# --- Prefix Configuration ---
+unbind-key C-b
+set -g prefix ";"
+bind-key ";" send-prefix
+
+# --- General Settings ---
+set -g visual-silence off
+set -g status-interval 1
+set -g display-time 1500
+set -g display-panes-time 10000
+set -g renumber-windows on
+
+# Enable terminal hyperlink features
+set -sa terminal-features ",*:hyperlinks"
+
+# --- OS-Specific Clipboard Integration ---
+{{ if eq .chezmoi.os "darwin" -}}
+set -s copy-command 'pbcopy'
+{{- else -}}
+set -s copy-command 'xclip -i -sel clipboard'
+{{- end }}
+
+# --- Session Management & Keybinds ---
+bind r source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded..."
+set -g detach-on-destroy off
+set-hook -g session-created 'if-shell -F "#{==:#{session_name},default}" { new-window -d -t default }'
+set-hook -g window-unlinked 'if-shell -F "#{==:#{session_name},default}" { if-shell -F "#{==:#{session_windows},1}" { new-window } }'
+
+# --- Plugins (via TPM) ---
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'wfxr/tmux-fzf-url'
+set -g @plugin 'tmux-plugins/tmux-cowboy'
+set -g @plugin 'tmux-plugins/tmux-pain-control'
+
+set -g @plugin '27medkamal/tmux-session-wizard'
+set -g @session-wizard 'T'
+
+set -g @plugin 'niksingh710/minimal-tmux-status'
+set -g @minimal-tmux-justify "left"
+set -g @minimal-tmux-indicator false
+set -g @minimal-tmux-status-left-extra "#S> "
+set -g @minimal-tmux-right false
+
+# Initialize TPM (keep at very bottom)
+run '~/.tmux/plugins/tpm/tpm'

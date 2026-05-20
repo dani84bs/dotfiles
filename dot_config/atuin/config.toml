@@ -1,0 +1,11 @@
+filter_mode = "global"
+filter_mode_shell_up_key_binding = "session"
+invert = false
+enter_accept = true
+prefers_reduced_motion = true
+
+[sync]
+records = true
+
+[theme]
+name = "catppuccin-mocha-green"

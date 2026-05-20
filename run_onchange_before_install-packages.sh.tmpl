@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+# Brewfile checksum: {{ include "Brewfile" | sha256sum }}
+
+# --- Install Homebrew if not present ---
+if ! command -v brew >/dev/null 2>&1; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Bring brew into PATH in case it was just installed in this run
+for brew_prefix in /opt/homebrew /usr/local /home/linuxbrew/.linuxbrew; do
+    if [ -x "${brew_prefix}/bin/brew" ]; then
+        eval "$("${brew_prefix}/bin/brew" shellenv)"
+        break
+    fi
+done
+
+# --- Install packages from Brewfile ---
+# --no-upgrade: only install missing packages, never upgrade existing ones
+# --no-lock:    don't write a Brewfile.lock.json
+brew bundle --file "{{ .chezmoi.sourceDir }}/Brewfile" --no-upgrade --no-lock

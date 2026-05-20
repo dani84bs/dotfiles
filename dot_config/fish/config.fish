@@ -1,0 +1,33 @@
+fish_add_path --global --prepend --move \
+    "$HOME/.local/bin" \
+    "/usr/local/bin"
+
+set -gx SHELL (which fish)
+set fish_greeting
+
+# Homebrew detection and initialization
+if test -x /opt/homebrew/bin/brew
+    eval (/opt/homebrew/bin/brew shellenv)
+else if test -x /usr/local/bin/brew
+    eval (/usr/local/bin/brew shellenv)
+else if test -x /home/linuxbrew/.linuxbrew/bin/brew
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+
+# Cleanup old tide variables to prevent conflicts
+if status is-interactive
+    for var in (set -U | string match -r '^tide_')
+        set -e $var
+    end
+end
+
+# Initialize CLI tools
+zoxide init fish | source
+atuin init --disable-up-arrow fish | source
+
+# Aliases
+alias ls='lsd'
+alias vim='nvim'
+alias glow='glow -p'
+alias tmux='tmux new -A -s default'
+alias cat='bat'
