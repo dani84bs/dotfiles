@@ -1,4 +1,13 @@
 #!/bin/bash
+set -euo pipefail
+
+for brew_prefix in /opt/homebrew /usr/local /home/linuxbrew/.linuxbrew; do
+    if [ -x "${brew_prefix}/bin/brew" ]; then
+        eval "$("${brew_prefix}/bin/brew" shellenv)"
+        break
+    fi
+done
+
 # Installs fisher and fish plugins (tide, pytest.fish).
 if ! command -v fish >/dev/null 2>&1; then
     echo "fish not found; skipping plugin install" >&2
