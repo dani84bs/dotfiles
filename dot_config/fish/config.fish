@@ -1,8 +1,7 @@
 fish_add_path --global --prepend --move \
     "$HOME/.local/bin" \
-    "/usr/local/bin"
+    /usr/local/bin
 
-set -gx SHELL (which fish)
 set fish_greeting
 
 # Homebrew detection and initialization
@@ -14,6 +13,7 @@ else if test -x /home/linuxbrew/.linuxbrew/bin/brew
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
 
+set -gx SHELL (which fish)
 # Cleanup old tide variables to prevent conflicts
 if status is-interactive
     for var in (set -U | string match -r '^tide_')
