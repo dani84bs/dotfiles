@@ -31,3 +31,7 @@ alias vim='nvim'
 alias glow='glow -p'
 alias tmux='tmux new -A -s default'
 alias cat='bat'
+
+{{- if eq .chezmoi.os "darwin" }}
+set -gx SSH_AUTH_SOCK ~/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
+{{- end }}
