@@ -42,13 +42,13 @@
   ^ (tap-hold 200 200 esc lctl) 
 
   A (tap-hold-release 200 250 a lctl)
-  S (tap-hold-release 200 350 s lalt)
+  S (tap-hold-except-keys 200 350 s lalt (e))
   D (tap-hold-release 200 250 d lmet)
   F (tap-hold-release 200 250 f lsft)
 
   J (tap-hold-release 200 250 j rsft)
   K (tap-hold-release 200 250 k rmet)
-  L (tap-hold-release 200 350 l ralt)
+  L (tap-hold-except-keys 200 350 l ralt (i))
   ; (tap-hold-release 200 250 ; rctl)
 
   num (tap-hold-release 200 250 grv (layer-toggle numbers))
