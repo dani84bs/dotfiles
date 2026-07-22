@@ -17,6 +17,9 @@ export SSH_AUTH_SOCK="{{ .chezmoi.homeDir }}/Library/Containers/com.bitwarden.de
 # Keybindings
 bindkey -e
 
+# Disable bell
+unsetopt BEEP
+
 # Completion
 autoload -Uz compinit
 compinit -C
