@@ -17,6 +17,7 @@ brew "ouch"
 brew "fish"
 brew "tmux"
 brew "lsd"
+brew "starship"
 
 # --- Editor & Dev Tools ---
 brew "neovim"

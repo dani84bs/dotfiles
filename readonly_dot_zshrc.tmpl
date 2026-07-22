@@ -1,0 +1,47 @@
+# PATH
+path=("$HOME/.local/bin" /usr/local/bin $path)
+export PATH
+
+# Homebrew detection and initialization
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
+export SSH_AUTH_SOCK="{{ .chezmoi.homeDir }}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+{{ end }}
+# Completion
+autoload -Uz compinit
+compinit -C
+
+zstyle ":completion:*" matcher-list "m:{a-zA-Z}={A-Za-z}"
+zstyle ":completion:*" menu select
+
+# Plugins
+source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+# CLI tools
+eval "$(zoxide init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(starship init zsh)"
+
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# Aliases
+alias ls='lsd'
+alias vim='nvim'
+alias glow='glow -p'
+alias tmux='tmux new -A -s default'
+alias cat='bat'
+alias lg='lazygit'
+alias ouchd='ouch decompress'
+alias ouchc='ouch compress'
+{{ if eq .chezmoi.os "darwin" -}}
+alias kanstop='sudo launchctl unload /Library/LaunchDaemons/org.kanata.plist'
+alias kanstart='sudo launchctl load /Library/LaunchDaemons/org.kanata.plist'
+{{- end }}
