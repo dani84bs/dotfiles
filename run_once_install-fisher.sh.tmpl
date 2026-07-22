@@ -1,3 +1,4 @@
+{{- if .installFisher -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -22,3 +23,4 @@ fish -c '
     fisher install ilancosman/tide@v6
     fisher install ddoroshev/pytest.fish
 '
+{{- end }}

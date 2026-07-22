@@ -1,0 +1,5 @@
+{{- $installKitty := promptBoolOnce . "installKitty" "Install kitty terminal emulator" -}}
+{{- $installFisher := promptBoolOnce . "installFisher" "Install fisher (fish plugin manager)" -}}
+[data]
+    installKitty = {{ $installKitty }}
+    installFisher = {{ $installFisher }}

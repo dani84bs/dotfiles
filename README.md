@@ -13,7 +13,7 @@ Personal dotfiles managed with [chezmoi](https://chezmoi.io).
 chezmoi init --apply dani84bs
 ```
 
-This will:
+You'll be prompted whether to install kitty and fisher (both optional). This will:
 
 1. Install Homebrew (if missing) and run `brew bundle`
 2. Install [fisher](https://github.com/jorgebucaran/fisher) + fish plugins (tide, pytest.fish)

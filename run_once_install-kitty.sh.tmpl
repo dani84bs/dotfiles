@@ -1,3 +1,4 @@
+{{- if .installKitty -}}
 #!/bin/bash
 set -euo pipefail
 
@@ -28,3 +29,4 @@ Categories=System;TerminalEmulator;
 EOF
     update-desktop-database "$HOME/.local/share/applications"
 fi
+{{- end }}
