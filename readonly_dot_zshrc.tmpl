@@ -47,6 +47,9 @@ alias cat='bat'
 alias lg='lazygit'
 alias ouchd='ouch decompress'
 alias ouchc='ouch compress'
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
 {{ if eq .chezmoi.os "darwin" -}}
 alias kanstop='sudo launchctl unload /Library/LaunchDaemons/org.kanata.plist'
 alias kanstart='sudo launchctl load /Library/LaunchDaemons/org.kanata.plist'
