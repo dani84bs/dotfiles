@@ -4,3 +4,4 @@
 .config/nvim/swap
 .config/nvim/view
 .config/nvim/lazy-lock.json
+Brewfile
