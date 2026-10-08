@@ -17,12 +17,6 @@ export SSH_AUTH_SOCK="{{ .chezmoi.homeDir }}/Library/Containers/com.bitwarden.de
 # Keybindings
 bindkey -e
 
-zmodload zsh/terminfo
-[[ -n $terminfo[kcuu1] ]] && bindkey "$terminfo[kcuu1]" up-line-or-history
-[[ -n $terminfo[kcud1] ]] && bindkey "$terminfo[kcud1]" down-line-or-history
-bindkey '^[[A' up-line-or-history
-bindkey '^[[B' down-line-or-history
-
 # Disable bell
 unsetopt BEEP
 
