@@ -4,6 +4,9 @@ invert = false
 enter_accept = true
 prefers_reduced_motion = true
 
+[keys]
+accept_past_line_start = true
+
 [sync]
 records = true
 
